@@ -1,80 +1,267 @@
 "DOTAAbilities"
 {
-	//=================================================================================================================
-	// Recipe: Arcane Boots
-	//=================================================================================================================
-	"item_recipe_arcane_boots2"
-	{
-		"ID"							"1005"
+  //==============================================================================================
+  // Flag NE
+  //==============================================================================================
+  "item_flag_ne"
+  {
+    "BaseClass"           "item_datadriven"
+    "AbilityTextureName"  "flag_ne"
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "ID"                 "1301"
+    "AbilityBehavior"    "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "Model"              "models\props_teams\banner_radiant.mdl"
 
-		"BaseClass"						"item_recipe_arcane_boots"
+    // Item Info
+    //-------------------------------------------------------------------------------------------------------------
+    "ItemCost"                    "1"
+    "ItemShopTags"                "damage"
+    "ItemQuality"                 "rare"
+    "ItemAliases"                 "ne flag"
+    "ItemShareability"            "ITEM_FULLY_SHAREABLE"
+    "ItemSellable"                "0"
+    "ItemKillable"                "0"
+    "ItemDeclarations"            "DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+    "ItemContributesToNetWorthWhenDropped"    "0"
+    "ItemDroppable"               "0"
+    "MaxUpgradeLevel"             "11"
+		"ItemBaseLevel"               "1"
 
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemCost"						"0"	
-		"ItemShopTags"					""
-		
-		// Recipe
-		//-------------------------------------------------------------------------------------------------------------
-		"ItemRecipe"					"1"
-		"ItemResult"					"item_arcane_boots2"
-		"ItemRequirements"
-		{
-			"01"						"item_energy_booster;item_arcane_boots"
-		}
-	}
-	
-	//=================================================================================================================
-	// Arcane Boots II
-	//=================================================================================================================
-	"item_arcane_boots2"
-	{
-		"ID"							"1006"
+    "OnSpellStart"
+    {
+      "ApplyModifier"
+      {
+        "Target"              "CASTER"
+        "ModifierName"        "flag_buff"
+      }
+    }
 
-		// General
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityBehavior"				"DOTA_ABILITY_BEHAVIOR_IMMEDIATE | DOTA_ABILITY_BEHAVIOR_NO_TARGET"
-		"BaseClass"						"item_arcane_boots"
+    // Stats
+    "Modifiers"
+    {
+      "flag_buff"
+      {
+        "Passive"           "1"
+        "Properties"
+        {
+          //"MODIFIER_PROPERTY_BASEDAMAGEOUTGOING_PERCENTAGE"   "%percentage_bonus"
+          "MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"     "%percentage_bonus"
+          "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"    "%percentage_bonus"
+        }
+      }
+    }
+    "AbilitySpecial"
+    {
+      "01"
+      {
+        "var_type"            "FIELD_INTEGER"
+        "percentage_bonus"    "0 100 200 300 40 50 60 70 80 90 100"
+      }
+    }
+  }
+  //==============================================================================================
+  // Flag NW
+  //==============================================================================================
+  "item_flag_nw"
+  {
+    "BaseClass"           "item_datadriven"
+    "AbilityTextureName"  "flag_nw"
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "ID"                 "1302"
+    "AbilityBehavior"    "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "Model"              "models\props_teams\banner_radiant.mdl"
 
-		// Stats		
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityCooldown"				"55.0"
+    // Item Info
+    //-------------------------------------------------------------------------------------------------------------
+    "ItemCost"                    "1"
+    "ItemShopTags"                "damage"
+    "ItemQuality"                 "rare"
+    "ItemAliases"                 "nw flag"
+    "ItemShareability"            "ITEM_FULLY_SHAREABLE"
+    "ItemSellable"                "0"
+    "ItemKillable"                "0"
+    "ItemDeclarations"            "DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+    "ItemContributesToNetWorthWhenDropped"    "0"
+    "ItemDroppable"               "0"
+    "MaxUpgradeLevel"             "11"
+		"ItemBaseLevel"               "1"
 
-		// Item Info
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilityManaCost"				"25"
-		"ItemCost"						"2450"
-		"ItemShopTags"					"move_speed;boost_mana;mana_pool"
-		"ItemQuality"					"rare"
-		"ItemDeclarations"				"DECLARE_PURCHASES_TO_SPECTATORS"
-		"ItemDisassembleRule"			"0"
-		"ItemAlertable"					"1"
-		"ItemAliases"					"mana;mb"
-		
-		// Special	
-		//-------------------------------------------------------------------------------------------------------------
-		"AbilitySpecial"
-		{
-			"01"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_movement"		"75"
-			}
-			"02"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"bonus_mana"			"500"
-			}
-			"03"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replenish_radius"		"600"
-			}
-			"04"
-			{
-				"var_type"				"FIELD_INTEGER"
-				"replenish_amount"		"250"
-			}
-		}
-	}
+    "OnSpellStart"
+    {
+      "ApplyModifier"
+      {
+        "Target"              "CASTER"
+        "ModifierName"        "flag_buff"
+      }
+    }
+
+    // Stats
+    "Modifiers"
+    {
+      "flag_buff"
+      {
+        "Passive"           "1"
+        "Properties"
+        {
+          "MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"     "%percentage_bonus"
+          "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"    "%percentage_bonus"
+        }
+      }
+    }
+    "AbilitySpecial"
+    {
+      "01"
+      {
+        "var_type"            "FIELD_INTEGER"
+        "percentage_bonus"    "0 10 20 30 40 50 60 70 80 90 100"
+      }
+    }
+  }
+  //==============================================================================================
+  // Flag SE
+  //==============================================================================================
+  "item_flag_se"
+  {
+    "BaseClass"           "item_datadriven"
+    "AbilityTextureName"  "flag_se"
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "ID"                 "1303"
+    "AbilityBehavior"    "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "Model"              "models\props_teams\banner_radiant.mdl"
+
+    // Item Info
+    //-------------------------------------------------------------------------------------------------------------
+    "ItemCost"                    "1"
+    "ItemShopTags"                "damage"
+    "ItemQuality"                 "rare"
+    "ItemAliases"                 "se flag"
+    "ItemShareability"            "ITEM_FULLY_SHAREABLE"
+    "ItemSellable"                "0"
+    "ItemKillable"                "0"
+    "ItemDeclarations"            "DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+    "ItemContributesToNetWorthWhenDropped"    "0"
+    "ItemDroppable"               "0"
+    "MaxUpgradeLevel"             "11"
+		"ItemBaseLevel"               "1"
+
+    "OnSpellStart"
+    {
+      "ApplyModifier"
+      {
+        "Target"              "CASTER"
+        "ModifierName"        "flag_buff"
+      }
+    }
+
+    // Stats
+    "Modifiers"
+    {
+      "flag_buff"
+      {
+        "Passive"           "1"
+        "Properties"
+        {
+          "MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"     "%percentage_bonus"
+          "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"    "%percentage_bonus"
+        }
+      }
+    }
+    "AbilitySpecial"
+    {
+      "01"
+      {
+        "var_type"            "FIELD_INTEGER"
+        "percentage_bonus"    "0 10 20 30 40 50 60 70 80 90 100"
+      }
+    }
+  }
+  //==============================================================================================
+  // Flag SW
+  //==============================================================================================
+  "item_flag_sw"
+  {
+    "BaseClass"           "item_datadriven"
+    "AbilityTextureName"  "flag_sw"
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "ID"                 "1304"
+    "AbilityBehavior"    "DOTA_ABILITY_BEHAVIOR_PASSIVE"
+    "Model"              "models\props_teams\banner_radiant.mdl"
+
+    // Item Info
+    //-------------------------------------------------------------------------------------------------------------
+    "ItemCost"                    "1"
+    "ItemShopTags"                "damage"
+    "ItemQuality"                 "rare"
+    "ItemAliases"                 "sw flag"
+    "ItemShareability"            "ITEM_FULLY_SHAREABLE"
+    "ItemSellable"                "0"
+    "ItemKillable"                "0"
+    "ItemDeclarations"            "DECLARE_PURCHASES_TO_TEAMMATES | DECLARE_PURCHASES_TO_SPECTATORS | DECLARE_PURCHASES_IN_SPEECH"
+    "ItemContributesToNetWorthWhenDropped"    "0"
+    "ItemDroppable"               "0"
+    "MaxUpgradeLevel"             "11"
+		"ItemBaseLevel"               "1"
+
+    "OnSpellStart"
+    {
+      "ApplyModifier"
+      {
+        "Target"              "CASTER"
+        "ModifierName"        "flag_buff"
+      }
+    }
+
+    // Stats
+    "Modifiers"
+    {
+      "flag_buff"
+      {
+        "Passive"           "1"
+        "Properties"
+        {
+          "MODIFIER_PROPERTY_DAMAGEOUTGOING_PERCENTAGE"   "%percentage_bonus"
+          "MODIFIER_PROPERTY_INCOMING_DAMAGE_PERCENTAGE"    "%percentage_bonus"
+        }
+      }
+    }
+    "AbilitySpecial"
+    {
+      "01"
+      {
+        "var_type"            "FIELD_INTEGER"
+        "percentage_bonus"    "0 10 20 30 40 50 60 70 80 90 100"
+      }
+    }
+  }
+  //==============================================================================================
+  // Item to apply modifiers
+  //==============================================================================================
+  "item_apply_modifiers"
+  {
+    // General
+    //-------------------------------------------------------------------------------------------------------------
+    "ID"                            "1103"
+    "BaseClass"                     "item_datadriven"
+    "ItemBaseLevel"                 "1"
+
+    // Stats
+    //-------------------------------------------------------------------------------------------------------------
+    "AbilityCastRange"              "9999"
+    "AbilityCastPoint"              "0.0"
+    "Modifiers"
+    {
+      "modifier_mute"
+      {
+        "StatusEffectName"     "particles/status_fx/status_effect_frost_lich.vpcf"
+        "States"
+        {
+          "MODIFIER_STATE_MUTED"  "MODIFIER_STATE_VALUE_ENABLED"
+        }
+      }
+    }
+  }
 }
