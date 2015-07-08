@@ -6,6 +6,15 @@ if GM == nil then
   GM.respawn = 10
   GM.stackBuff = 20 -- not used yet
   GM.heroes = {}
+  GM.scoreBad = 0
+  GM.scoreGood = 0
+end
+
+if CONSTANTS == nil then
+  CONSTANTS = class({})
+  CONSTANTS.scoreToWin = 800
+  CONSTANTS.pointForKill = 5
+  CONSTANTS.poins = {2, 6, 13, 25}
 end
 
 require('timers')
@@ -31,6 +40,8 @@ function GM:InitGameMode()
   GameMode:SetFixedRespawnTime(GM.respawn)
   GameMode:SetTopBarTeamValuesVisible(true)
   GameMode:SetTopBarTeamValuesOverride(true)
+  GM:updateScore()
+  
   GameRules:SetPreGameTime(5.0)
   GameRules:SetPostGameTime(5.0)
 
@@ -49,15 +60,21 @@ function GM:OnThink()
       spawnFlagNW()
       spawnFlagSE()
       spawnFlagSW()
+      CONSTANTS.poins[0] = 0
       Timers:CreateTimer(20,
         function()
           print("This function is called 20 seconds after the game begins, and every 20 seconds thereafter")
           local i = 1
           while GM.heroes[i] and i < 11 do
-            checkFlag(GM.heroes[i])
+            buffHeroWithFlag(GM.heroes[i])
             i = i + 1
           end
           return 20
+        end)
+      Timers:CreateTimer(5,
+        function()
+          scoreByFlags()
+          return 5
         end)
 		end
   elseif GameRules:State_Get() >= DOTA_GAMERULES_STATE_POST_GAME then
@@ -66,8 +83,40 @@ function GM:OnThink()
   return 1
 end
 
-function checkFlag(hero)
-  print("Check if "..hero:GetName().." has flag.")
+function scoreByFlags()
+  local flagsWithGood = 0
+  local flagsWithBad = 0
+  
+  local i = 1
+  while GM.heroes[i] and i < 11 do
+    if hasFlag(GM.heroes[i]) then
+      if GM.heroes[i]:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+        flagsWithGood = flagsWithGood + 1
+      elseif GM.heroes[i]:GetTeamNumber() == DOTA_TEAM_BADGUYS then
+        flagsWithBad = flagsWithBad + 1
+      end
+    end
+    i = i + 1
+  end
+  GM.scoreGood = GM.scoreGood + CONSTANTS.poins[flagsWithGood]
+  GM.scoreBad = GM.scoreBad + CONSTANTS.poins[flagsWithBad]
+  GM:updateScore()
+end
+
+function hasFlag(hero)
+  for i = 0,5 do
+    local item = hero:GetItemInSlot(i)
+    if item then
+      if item:GetAbilityName() == "item_flag_ne" or item:GetAbilityName() == "item_flag_nw" or item:GetAbilityName() == "item_flag_se" or item:GetAbilityName() == "item_flag_sw" then
+        return true
+      end
+    end
+  end
+  return false
+end
+
+function buffHeroWithFlag(hero)
+  print("Buff "..hero:GetName().." if he has flag.")
   for i = 0,5 do
     local item = hero:GetItemInSlot(i)
     if item then
@@ -111,6 +160,12 @@ function GM:OnEntityKilled(keys)
       end
     end
   end
+  if hero:GetTeamNumber() == DOTA_TEAM_GOODGUYS then
+    GM.scoreBad = GM.scoreBad + CONSTANTS.pointForKill
+  elseif hero:GetTeamNumber() == DOTA_TEAM_BADGUYS then
+    GM.scoreGood = GM.scoreGood + CONSTANTS.pointForKill
+  end
+  GM.updateScore()
 end
 
 function GM:OnNPCSpawned(keys)
@@ -139,27 +194,41 @@ function spawnFlagNE()
   print("entrou spawnFlagNE")
   local flag = CreateItem("item_flag_ne", nil, nil)
   CreateItemOnPositionSync(Vector(100, 100, 128), flag)
-  print("saiu spawnFlagNE")
 end
 
 function spawnFlagNW()
   print("entrou spawnFlagNW")
   local flag = CreateItem("item_flag_nw", nil, nil)
   CreateItemOnPositionSync(Vector(-100, 100, 128), flag)
-  print("saiu spawnFlagNW")
 end
 
 function spawnFlagSE()
   print("entrou spawnFlagSE")
   local flag = CreateItem("item_flag_se", nil, nil)
   CreateItemOnPositionSync(Vector(100, -100, 128), flag)
-  print("saiu spawnFlagSE")
 end
 
 function spawnFlagSW()
   print("entrou spawnFlagSW")
   local flag = CreateItem("item_flag_sw", nil, nil)
   CreateItemOnPositionSync(Vector(-100, -100, 128), flag)
-  print("saiu spawnFlagSW")
+end
+
+function GM:updateScore()
+  print("Updating score: " .. GM.scoreGood .. " x " .. GM.scoreBad)
+
+  local GameMode = GameRules:GetGameModeEntity()
+  GameMode:SetTopBarTeamValue(DOTA_TEAM_GOODGUYS, GM.scoreGood)
+  GameMode:SetTopBarTeamValue(DOTA_TEAM_BADGUYS, GM.scoreBad)
+
+  -- If any team reaches scoreToWin, the game ends and that team is considered winner.
+  if GM.scoreGood >= CONSTANTS.scoreToWin then
+    print("Team GOOD GUYS victory!")
+    GameRules:SetGameWinner(DOTA_TEAM_GOODGUYS)
+  end
+  if GM.scoreBad >= CONSTANTS.scoreToWin then
+    print("Team BAD GUYS victory!")
+    GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+  end
 end
 
