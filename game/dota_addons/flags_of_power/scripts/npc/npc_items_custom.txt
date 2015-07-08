@@ -36,6 +36,21 @@
         "ModifierName"        "flag_buff"
       }
     }
+    "OnEquip"
+    {
+      "DelayedAction"
+      {
+        "Delay"            "0.1"
+        "Action"
+        {
+          "RunScript"
+          {
+            "ScriptFile"      "addon_game_mode.lua"
+            "Function"        "pickupFlag"
+          }
+        }
+      }
+    }
 
     // Stats
     "Modifiers"
@@ -94,6 +109,21 @@
       {
         "Target"              "CASTER"
         "ModifierName"        "flag_buff"
+      }
+    }
+    "OnEquip"
+    {
+      "DelayedAction"
+      {
+        "Delay"            "0.1"
+        "Action"
+        {
+          "RunScript"
+          {
+            "ScriptFile"      "addon_game_mode.lua"
+            "Function"        "pickupFlag"
+          }
+        }
       }
     }
 
@@ -155,6 +185,21 @@
         "ModifierName"        "flag_buff"
       }
     }
+    "OnEquip"
+    {
+      "DelayedAction"
+      {
+        "Delay"            "0.1"
+        "Action"
+        {
+          "RunScript"
+          {
+            "ScriptFile"      "addon_game_mode.lua"
+            "Function"        "pickupFlag"
+          }
+        }
+      }
+    }
 
     // Stats
     "Modifiers"
@@ -212,6 +257,21 @@
       {
         "Target"              "CASTER"
         "ModifierName"        "flag_buff"
+      }
+    }
+    "OnEquip"
+    {
+      "DelayedAction"
+      {
+        "Delay"            "0.1"
+        "Action"
+        {
+          "RunScript"
+          {
+            "ScriptFile"      "addon_game_mode.lua"
+            "Function"        "pickupFlag"
+          }
+        }
       }
     }
 

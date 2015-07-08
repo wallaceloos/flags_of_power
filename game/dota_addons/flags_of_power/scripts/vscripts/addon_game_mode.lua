@@ -133,6 +133,18 @@ function buffHeroWithFlag(hero)
   end
 end
 
+function spawnFlag(flagName)
+  if flagName == "item_flag_ne" then
+    spawnFlagNE()
+  elseif flagName == "item_flag_nw" then
+    spawnFlagNW()
+  elseif flagName == "item_flag_se" then
+    spawnFlagSE()
+  elseif flagName == "item_flag_sw" then
+    spawnFlagSW()
+  end
+end
+
 function GM:OnEntityKilled(keys)
   local hero = EntIndexToHScript(keys.entindex_killed)
 
@@ -147,15 +159,7 @@ function GM:OnEntityKilled(keys)
       if item:GetAbilityName() == "item_flag_ne" or item:GetAbilityName() == "item_flag_nw" or item:GetAbilityName() == "item_flag_se" or item:GetAbilityName() == "item_flag_sw" then
         print("item lvl: "..item:GetLevel())
         hero:SetModelScale(hero.originalModelScale)
-        if item:GetAbilityName() == "item_flag_ne" then
-          spawnFlagNE()
-        elseif item:GetAbilityName() == "item_flag_nw" then
-          spawnFlagNW()
-        elseif item:GetAbilityName() == "item_flag_se" then
-          spawnFlagSE()
-        else
-          spawnFlagSW()
-        end
+        spawnFlag(item:GetAbilityName())
         hero:RemoveItem(item)
       end
     end
@@ -184,6 +188,15 @@ function GM:OnNPCSpawned(keys)
 			hero:AddExperience(20000, 0, false, false)
 			level = hero:GetLevel()
 		end
+    for i=0,15 do
+      local ability = hero:GetAbilityByIndex(i)
+      print("antes i: "..i)
+      if ability then
+        print("setando para: "..ability:GetMaxLevel())
+        ability:SetLevel(ability:GetMaxLevel())
+      end
+    end
+    hero:SetAbilityPoints(0)
   end
   if hero:IsHero() then
     print("OnNPCSpawned")
@@ -229,6 +242,28 @@ function GM:updateScore()
   if GM.scoreBad >= CONSTANTS.scoreToWin then
     print("Team BAD GUYS victory!")
     GameRules:SetGameWinner(DOTA_TEAM_BADGUYS)
+  end
+end
+
+function pickupFlag(event)
+  local unit = EntIndexToHScript(event.caster_entindex)
+  local itemName = event.ability:GetAbilityName()
+  local flags = 0
+  local dropItem = nil
+  for i = 0,5 do
+    local item = unit:GetItemInSlot(i)
+    if item then
+      if item:GetAbilityName() == "item_flag_ne" or item:GetAbilityName() == "item_flag_nw" or item:GetAbilityName() == "item_flag_se" or item:GetAbilityName() == "item_flag_sw" then
+        if item:GetAbilityName() == itemName then
+          dropItem = item
+        end
+        flags = flags + 1
+      end
+    end
+  end
+  if flags > 1 then
+    unit:RemoveItem(dropItem)
+    spawnFlag(itemName)
   end
 end
 
