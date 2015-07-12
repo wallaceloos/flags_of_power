@@ -206,25 +206,25 @@ end
 function spawnFlagNE()
   print("entrou spawnFlagNE")
   local flag = CreateItem("item_flag_ne", nil, nil)
-  CreateItemOnPositionSync(Vector(100, 100, 128), flag)
+  CreateItemOnPositionSync(Vector(1500, 1500, 128), flag)
 end
 
 function spawnFlagNW()
   print("entrou spawnFlagNW")
   local flag = CreateItem("item_flag_nw", nil, nil)
-  CreateItemOnPositionSync(Vector(-100, 100, 128), flag)
+  CreateItemOnPositionSync(Vector(-1500, 1500, 128), flag)
 end
 
 function spawnFlagSE()
   print("entrou spawnFlagSE")
   local flag = CreateItem("item_flag_se", nil, nil)
-  CreateItemOnPositionSync(Vector(100, -100, 128), flag)
+  CreateItemOnPositionSync(Vector(1500, -1500, 128), flag)
 end
 
 function spawnFlagSW()
   print("entrou spawnFlagSW")
   local flag = CreateItem("item_flag_sw", nil, nil)
-  CreateItemOnPositionSync(Vector(-100, -100, 128), flag)
+  CreateItemOnPositionSync(Vector(-1500, -1500, 128), flag)
 end
 
 function GM:updateScore()
